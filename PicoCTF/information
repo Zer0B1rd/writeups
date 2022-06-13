@@ -1,0 +1,66 @@
+======================================== MAIN AREA ========================================
+Name: information
+
+TASK: 
+Files can always be changed in a secret way. Can you find the flag? cat.jpg
+-------------------------------------------------------------------------------------------
+Known information:
+We have one File:
+1. cat.jpg | 
+-------------------------------------------------------------------------------------------
+Process:
+At first sight, the image looks quite normal and only shows a cat on a MacBook with a Commandline on the display.
+Then we examine the image with exiftool, which allows us to view the metadata of the image.
+
+└─$ /home/kali/tools/exiftool/exiftool cat.jpg 
+ExifTool Version Number         : 12.42
+File Name                       : cat.jpg
+Directory                       : .
+File Size                       : 878 kB
+File Modification Date/Time     : 2022:06:13 14:02:49-04:00
+File Access Date/Time           : 2022:06:13 14:43:43-04:00
+File Inode Change Date/Time     : 2022:06:13 14:43:18-04:00
+File Permissions                : -rw-r--r--
+File Type                       : JPEG
+File Type Extension             : jpg
+MIME Type                       : image/jpeg
+JFIF Version                    : 1.02
+Resolution Unit                 : None
+X Resolution                    : 1
+Y Resolution                    : 1
+Current IPTC Digest             : 7a78f3d9cfb1ce42ab5a3aa30573d617
+Copyright Notice                : PicoCTF
+Application Record Version      : 4
+XMP Toolkit                     : Image::ExifTool 10.80
+License                         : cGljb0NURnt0aGVfbTN0YWRhdGFfMXNfbW9kaWZpZWR9
+Rights                          : PicoCTF
+Image Width                     : 2560
+Image Height                    : 1598
+Encoding Process                : Baseline DCT, Huffman coding
+Bits Per Sample                 : 8
+Color Components                : 3
+Y Cb Cr Sub Sampling            : YCbCr4:2:0 (2 2)
+Image Size                      : 2560x1598
+Megapixels                      : 4.1
+
+We immediately notice two strings:
+1. Current IPTC Digest - 7a78f3d9cfb1ce42ab5a3aa30573d617
+2. License - cGljb0NURnt0aGVfbTN0YWRhdGFfMXNfbW9kaWZpZWR9
+
+I tried quickly redeeming the flags with picoCTF{string}, but both were wrong.
+So I thought what else could be done?
+After countless tools it occurred to me that often things are encoded in base64 and you have to decode them.
+
+So let's do that
+First, we insert the string inside a textfile
+
+┌──(kali㉿kali)-[~/Desktop/Machines/Pico_CTF/information]
+└─$ echo "cGljb0NURnt0aGVfbTN0YWRhdGFfMXNfbW9kaWZpZWR9" > flag.txt
+
+After that we decode it with the base64 command
+
+┌──(kali㉿kali)-[~/Desktop/Machines/Pico_CTF/information]
+└─$ base64 -d flag.txt                                    
+picoCTF{the_m3tadata_1s_modified}                                                                                                                                                   
+
+There we have our flag!
