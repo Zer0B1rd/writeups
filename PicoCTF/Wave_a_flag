@@ -1,0 +1,46 @@
+======================================== MAIN AREA ========================================
+Name:Wave a flag
+
+TASK: 
+Can you invoke help flags for a tool or binary? This program has extraordinarily helpful information...
+-------------------------------------------------------------------------------------------
+Known information:
+We have one file:
+
+┌──(kali㉿kali)-[~/Desktop/Machines/Pico_CTF/wave_a_flag]
+└─$ file warm
+warm: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter 
+/lib64/ld-linux-x86-64.so.2, for GNU/Linux 3.2.0, BuildID[sha1]=985d9586d46e8651ab66c2fbb5a5473492466aa3, with debug_info, not stripped
+
+-------------------------------------------------------------------------------------------
+Process:
+Since it is an "application", let's make it executable first.
+
+┌──(kali㉿kali)-[~/Desktop/Machines/Pico_CTF/wave_a_flag]
+└─$ chmod +x warm 
+
+Now we execute it
+
+┌──(kali㉿kali)-[~/Desktop/Machines/Pico_CTF/wave_a_flag]
+└─$ ./warm 
+Hello user! Pass me a -h to learn what I can do!
+
+It prompts us to take the flag -h as a parameter in addition.
+
+┌──(kali㉿kali)-[~/Desktop/Machines/Pico_CTF/wave_a_flag]
+└─$ ./warm -h  
+Oh, help? I actually don't do much, but I do have this flag here: picoCTF{b1scu1ts_4nd_gr4vy_18788aaa}
+
+It immediately prints the flag for us!
+
+-------------------------------------------------------------------------------------------
+
+But here I also had another way
+
+We use the strings command to "display" the text inside the file and pipe it directly into grep.
+
+┌──(kali㉿kali)-[~/Desktop/Machines/Pico_CTF/wave_a_flag]
+└─$ strings warm | grep "picoCTF"
+Oh, help? I actually don't do much, but I do have this flag here: picoCTF{b1scu1ts_4nd_gr4vy_18788aaa}
+
+Here we go with the flag!
