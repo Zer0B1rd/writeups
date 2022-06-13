@@ -1,0 +1,22 @@
+======================================== MAIN AREA ========================================
+Name: Obedient Cat
+
+TASK: 
+This file has a flag in plain sight (aka "in-the-clear").
+-------------------------------------------------------------------------------------------
+Known information:
+We have one file:
+
+┌──(kali㉿kali)-[~/Desktop/Machines/Pico_CTF/Obient_Cat]
+└─$ file flag   
+flag: ASCII text
+-------------------------------------------------------------------------------------------
+Process:
+Since this is a text file, let's look at it first using the cat command.
+
+┌──(kali㉿kali)-[~/Desktop/Machines/Pico_CTF/Obient_Cat]
+└─$ cat flag       
+picoCTF{s4n1ty_v3r1f13d_28e8376d}
+
+We already got the flag!
+Since it was a very easy challenge, it's not surprising that we got the flag right away.
