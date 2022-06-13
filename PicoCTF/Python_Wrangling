@@ -1,0 +1,42 @@
+======================================== MAIN AREA ========================================
+Name: Python_Wrangling
+
+TASK: 
+Python scripts are invoked kind of like programs in the Terminal... 
+Can you run this Python script using this password to get the flag?
+-------------------------------------------------------------------------------------------
+Known information:
+We have three files
+1. ende.py     | python script, ASCII text exec
+2. flag.txt.en | ASCII text
+3. pw.txt      | ASCII text
+-------------------------------------------------------------------------------------------
+Process:
+First, let's try the usual thing when we want to run a python script and that would be the python command. 
+Since often scripts output an example when you start them without parameters.
+
+┌──(kali㉿kali)-[~/Desktop/Machines/Pico_CTF/Python_Wrangling]
+└─$ python3 ende.py        
+Usage: ende.py (-e/-d) [file]
+
+As we thought, it outputs an example and displays and two flags: -e ( maybe encrypt) and -d(maybe decrypt).
+Let's try the script + the flag e and see what happens.
+
+┌──(kali㉿kali)-[~/Desktop/Machines/Pico_CTF/Python_Wrangling]
+└─$ python3 ende.py -d flag.txt.en 
+Please enter the password:
+
+It asks us for a password, so we read the password file and then paste the password.
+
+┌──(kali㉿kali)-[~/Desktop/Machines/Pico_CTF/Python_Wrangling]
+└─$ cat pw.txt                                              
+dbd1bea4dbd1bea4dbd1bea4dbd1bea4
+
+Now insert the password
+
+┌──(kali㉿kali)-[~/Desktop/Machines/Pico_CTF/Python_Wrangling]
+└─$ python3 ende.py -d flag.txt.en 
+Please enter the password:dbd1bea4dbd1bea4dbd1bea4dbd1bea4
+picoCTF{4p0110_1n_7h3_h0us3_dbd1bea4}
+
+And we have the flag!
