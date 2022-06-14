@@ -1,0 +1,31 @@
+======================================== MAIN AREA ========================================
+Name:Tab, Tab, Attack
+
+TASK: 
+Using tabcomplete in the Terminal will add years to your life, esp. when dealing with long 
+rambling directory structures and filenames: Addadshashanammu.zip
+-------------------------------------------------------------------------------------------
+Known information:
+We got one file:
+
+┌──(root㉿kali)-[/home/kali/Downloads]
+└─# file Addadshashanammu.zip 
+Addadshashanammu.zip: Zip archive data, at least v1.0 to extract, compression method=store
+                                                                 
+-------------------------------------------------------------------------------------------
+Process:
+The description leads us to believe that a kind of archival Matryoshka was created here with unnecessarily long names.
+
+So we have to make about 7 times unnecessary cd to reach the final folder.
+
+There is a new file waiting for us
+
+
+Since it is an exec, we run it
+
+┌──(root㉿kali)-[/home/…/Assurnabitashpi/Maelkashishi/Onnissiralis/Ularradallaku]
+└─# ./fang-of-haynekhtnamet 
+*ZAP!* picoCTF{l3v3l_up!_t4k3_4_r35t!_d32e018c}
+
+
+BAM, we have the flag!
