@@ -1,0 +1,56 @@
+======================================== MAIN AREA ========================================
+Name:Static ain't always noise
+
+TASK: 
+Can you look at the data in this binary: static? This BASH script might help!
+-------------------------------------------------------------------------------------------
+Known information:
+We have two files:
+                                                                                                                                                                                        
+┌──(kali㉿kali)-[~/Downloads]
+└─$ file ltdis.sh  static 
+ltdis.sh: Bourne-Again shell script, ASCII text executable
+static:   ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter 
+/lib64/ld-linux-x86-64.so.2, for GNU/Linux 3.2.0, BuildID[sha1]=17ad46e6c58b7c40148a89923e314662595d101b, not stripped
+
+-------------------------------------------------------------------------------------------
+Process:
+
+First we add some exec permissions to the .sh file
+
+┌──(kali㉿kali)-[~/Downloads]
+└─$ chmod +x ltdis.sh
+
+Then we run the file and take a look at the output
+
+┌──(kali㉿kali)-[~/Downloads]
+└─$ ./ltdis.sh       
+Attempting disassembly of  ...
+objdump: 'a.out': No such file
+objdump: section '.text' mentioned in a -j option, but not found in any input file
+Disassembly failed!
+Usage: ltdis.sh <program-file>
+Bye!
+
+So, we need some file as a parameter for the script. 
+I hope you still have in mind that we got a file "static" for it.
+
+┌──(kali㉿kali)-[~/Downloads]
+└─$ ./ltdis.sh static          
+Attempting disassembly of static ...
+Disassembly successful! Available at: static.ltdis.x86_64.txt
+Ripping strings from binary with file offsets...
+Any strings found in static have been written to static.ltdis.strings.txt with file offset
+
+We have received two new files.
+
+static.ltdis.strings.txt: ASCII text
+static.ltdis.x86_64.txt:  ASCII text
+
+Then we use the beautiful grep command to gather the flag
+
+┌──(root㉿kali)-[/home/kali/Downloads]
+└─# grep "pico" static.ltdis.strings.txt 
+   1020 picoCTF{d15a5m_t34s3r_ccb2b43e}
+
+BAM, we got the flag!
