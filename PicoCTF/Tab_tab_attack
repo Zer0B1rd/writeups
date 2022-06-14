@@ -16,10 +16,13 @@ Addadshashanammu.zip: Zip archive data, at least v1.0 to extract, compression me
 Process:
 The description leads us to believe that a kind of archival Matryoshka was created here with unnecessarily long names.
 
-So we have to make about 7 times unnecessary cd to reach the final folder.
+So we have to make about 5-7 times unnecessary cd to reach the final folder.
 
 There is a new file waiting for us
 
+┌──(root㉿kali)-[/home/…/Assurnabitashpi/Maelkashishi/Onnissiralis/Ularradallaku]
+└─# ls -ll fang-of-haynekhtnamet 
+-rwxr-xr-x 1 root root 8320 Mar 15  2021 fang-of-haynekhtnamet
 
 Since it is an exec, we run it
 
