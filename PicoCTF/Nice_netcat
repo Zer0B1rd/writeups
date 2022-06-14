@@ -1,0 +1,31 @@
+======================================== MAIN AREA ========================================
+Name: Nice netcat
+
+TASK: 
+There is a nice program that you can talk to by using this command in a shell: $ nc mercury.picoctf.net 22902, but it doesn't speak English...
+-------------------------------------------------------------------------------------------
+Known information:
+We know that we need to use netcat, we know a domain and a specific port.
+-------------------------------------------------------------------------------------------
+Process:
+Surprisingly, let's enter the netcat command with the rest.
+
+┌──(root㉿kali)-[~]
+└─# nc mercury.picoctf.net 22902 > flag_file   
+
+Output of the file:
+
+└─# cat flag_file 
+112 105 99 111 67 84 70 
+123 103 48 48 100 95 107 
+49 116 116 121 33 95 110 
+49 99 51 95 107 49 116 
+116 121 33 95 100 51 100 
+102 100 54 100 102 125 10 
+
+Okay, those are some numbers. But we already know that is not a real "language".
+I thought about ascii, because it doesn't look like a cipher I know.
+So let's insert our numbers in the filed of https://www.duplichecker.com/ascii-to-text.php.
+
+picoCTF{g00d_k1tty!_n1c3_k1tty!_d3dfd6df}
+And we got the flag!
