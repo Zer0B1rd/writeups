@@ -8,6 +8,6 @@ Here I will create writeups about **CTFs**:triangular_flag_on_post: and **boxes*
 I'm always open to suggestions for improvement and welcome tips to learn more about commands, programs, scripts, etc.
 
 Thanks for being here,
-stay safe, **Friend**
+stay safe, **Friend**.
 #
 
