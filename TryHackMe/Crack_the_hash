@@ -1,0 +1,138 @@
+======================================== MAIN AREA ========================================
+Name: Crack the hash
+
+TASK: 
+Can you complete the level 1 tasks by cracking the hashes?
+This room has two Levels
+Level1
+1. 48bb6e862e54f2a795ffc4e541caed4d
+2. CBFDAC6008F9CAB4083784CBD1874F76618D2A97
+3. 1C8BFE8F801D79745C4631D09FFF36C82AA37FC4CCE4FC946683D7B336B63032
+4. $2y$12$Dwt1BZj6pcyc3Dy1FWZ5ieeUznr71EeNkJkUlypTsgbX1H68wsRom
+5. 279412f945939ba78ce0758d3fd83daa
+-------------------------------------------------------------------------------------------
+Known information:
+-
+-------------------------------------------------------------------------------------------
+Process:
+First of all, let's create a file
+
+┌──(kali㉿kali)-[~/Desktop]
+└─$ vi hashes.txt  
+
+Now we copy the string inside the file, I will do this process with all hashes, so I will not list them separately.
+
+┌──(kali㉿kali)-[~/Desktop]
+└─$ hashcat -m0 hashes.txt /usr/share/wordlists/rockyou.txt 
+
+We use -m0 because of the MD5 format.
+
+Output:
+48bb6e862e54f2a795ffc4e541caed4d:easy
+
+So we will repeat this for the other hashes too.
+-------------------------------------------------------------------------------------------
+
+2.
+┌──(kali㉿kali)-[~/Desktop]
+└─$ hashcat -m100 hashes.txt /usr/share/wordlists/rockyou.txt
+
+We use -m100 because of the SHA1 format.
+
+Output:
+cbfdac6008f9cab4083784cbd1874f76618d2a97:password123 
+-------------------------------------------------------------------------------------------
+
+3.
+┌──(kali㉿kali)-[~/Desktop]
+└─$ hashcat -m1400 hashes.txt /usr/share/wordlists/rockyou.txt
+
+We use -m1400 because of the SHA-256 format.
+
+Output:
+1c8bfe8f801d79745c4631d09fff36c82aa37fc4cce4fc946683d7b336b63032:letmein
+-------------------------------------------------------------------------------------------
+
+4.
+┌──(kali㉿kali)-[~/Desktop]
+└─$ hashcat -m3200 hashes.txt /usr/share/wordlists/rockyou.txt
+
+We notice $2y$ which often points to bcrypt (I learned this in a TryHackMe room), so we choose the m3200 for bcrypt.
+
+Output:
+$2y$12$Dwt1BZj6pcyc3Dy1FWZ5ieeUznr71EeNkJkUlypTsgbX1H68wsRom:bleh
+-------------------------------------------------------------------------------------------
+
+5.
+┌──(kali㉿kali)-[~/Desktop]
+└─$ hashcat -m900 hashes.txt /usr/share/wordlists/rockyou.txt
+
+We use -m900 because of the MD4 format.
+
+Output:
+279412f945939ba78ce0758d3fd83daa:Eternity22
+
+So, we finished the first level.
+-------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------
+
+Level 2, lets go!
+We know:
+1. F09EDCB1FCEFC6DFB23DC3505A882655FF77375ED8AA2D1C13F640FCCC2D0C85
+2. 1DFECA0C002AE40B8619ECF94819CC1B
+3. $6$aReallyHardSalt$6WKUTqzq.UQQmrm0p/T7MPpMbGNnzXPMAXi4bJMl9be.cfi3/qxIf.hsGpS41BqMhSrHVXgMpdjS6xeKZAs02 | Salt: aReallyHardSalt
+4. e5d8870e5bdd26602cab8dbe07a942c8669e56d6 | Salt: tryhackme
+-------------------------------------------------------------------------------------------
+
+Again, we copy the hashes and salts one by one into Hashes.txt
+
+1.
+┌──(kali㉿kali)-[~/Desktop]
+└─$ hashcat -m1400 hashes.txt /usr/share/wordlists/rockyou.txt
+
+We use -m1400 because of the SHA2-256 format.
+
+Output:
+f09edcb1fcefc6dfb23dc3505a882655ff77375ed8aa2d1c13f640fccc2d0c85:paule
+-------------------------------------------------------------------------------------------
+
+2.
+┌──(kali㉿kali)-[~/Desktop]
+└─$ hashcat -m1000 hashes.txt /usr/share/wordlists/rockyou.txt
+
+We use -m1000 because of the NTLM format.
+
+Output:
+1DFECA0C002AE40B8619ECF94819CC1B:n63umy8lkf4i
+-------------------------------------------------------------------------------------------
+
+3.
+We notice $6$, which is a indicator for SHA512 and we see a salt. A salt is random number or something like that at the beginning or end of the hash. 
+Often ppl use the current time with some parameters to generate a "random" salt.
+A salt helps the very generic hash become a little harder to track.
+While password123 with md5 would always be: 8c405ae1daf2575440a037284f934421, with a salt it would always look a bit different and therefore harder to figure out.
+password123 + salt(666):
+0b39b248f4e03f116c82a21ec155f9ed
+[That was my understanding of the Salt benefit.]
+
+┌──(kali㉿kali)-[~/Desktop]
+└─$ hashcat -m1800 hashes.txt /usr/share/wordlists/rockyou.txt 
+
+We use -m1800 because of the SHA-512 format.
+
+Output:
+$6$aReallyHardSalt$6WKUTqzq.UQQmrm0p/T7MPpMbGNnzXPMAXi4bJMl9be.cfi3/qxIf.hsGpS41BqMhSrHVXgMpdjS6xeKZAs02:waka99
+-------------------------------------------------------------------------------------------
+
+4.
+We insert it like: e5d8870e5bdd26602cab8dbe07a942c8669e56d6:tryhackme
+
+┌──(kali㉿kali)-[~/Desktop]
+└─$ hashcat -m160 hashes.txt /usr/share/wordlists/rockyou.txt --show
+
+We use -m160 because of the HMAC-SHA1 format.
+
+Output:
+e5d8870e5bdd26602cab8dbe07a942c8669e56d6:tryhackme:481616481616
+
+Now we got the badge!
