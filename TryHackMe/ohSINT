@@ -1,0 +1,87 @@
+======================================== MAIN AREA ========================================
+Name:ohSINT
+
+TASK: 
+Are you able to use open source intelligence to solve this challenge?
+-------------------------------------------------------------------------------------------
+Known information:
+We need to use OSint -> Open Source intelligence
+-------------------------------------------------------------------------------------------
+Process:
+We got a file named WindowsXP.jpg
+
+
+Questions:
+What is this users avatar of?
+A:cat
+
+What city is this person in?
+A: London
+
+Whats the SSID of the WAP he connected to?
+A: UnileverWiFi
+
+What is his personal email address?
+A: OWoodflint@gmail.com
+
+What site did you find his email address on?
+A: github
+
+Where has he gone on holiday?
+A:New York
+
+What is this persons password?
+A: pennYDr0pper.!
+-------------------------------------------------------------------------------------------
+
+┌──(kali㉿kali)-[~/Desktop]
+└─$ file WindowsXP.jpg 
+WindowsXP.jpg: JPEG image data, baseline, precision 8, 1920x1080, components 3
+                           
+First, let's check the image with exiftool.
+┌──(kali㉿kali)-[~/Desktop]
+└─$ /home/kali/tools/exiftool/exiftool WindowsXP.jpg 
+ExifTool Version Number         : 12.42
+File Name                       : WindowsXP.jpg
+Directory                       : .
+File Size                       : 234 kB
+File Modification Date/Time     : 2022:06:21 19:02:37-04:00
+File Access Date/Time           : 2022:06:21 19:02:38-04:00
+File Inode Change Date/Time     : 2022:06:21 19:02:37-04:00
+File Permissions                : -rw-rw-r--
+File Type                       : JPEG
+File Type Extension             : jpg
+MIME Type                       : image/jpeg
+XMP Toolkit                     : Image::ExifTool 11.27
+GPS Latitude                    : 54 deg 17' 41.27" N
+GPS Longitude                   : 2 deg 15' 1.33" W
+Copyright                       : OWoodflint
+Image Width                     : 1920
+Image Height                    : 1080
+Encoding Process                : Baseline DCT, Huffman coding
+Bits Per Sample                 : 8
+Color Components                : 3
+Y Cb Cr Sub Sampling            : YCbCr4:2:0 (2 2)
+Image Size                      : 1920x1080
+Megapixels                      : 2.1
+GPS Latitude Ref                : North
+GPS Longitude Ref               : West
+GPS Position                    : 54 deg 17' 41.27" N, 2 deg 15' 1.33" W
+
+1. The copyright is OWoodflint, I search it on google and found some accounts with a cat profile pic, which perfectly fits the character limit of the THM.
+2. We google owoodflint email and see a github account with the E-mail. So we can two more questions.
+3. On his blog: https://oliverwoodflint.wordpress.com/2019/03/03/the-journey-begins/ we see that the is on holiday in New York.
+4. Also his Twitter tweet says: 
+
+From my house I can get free wifi ;D
+
+Bssid: B4:5D:50:AA:86:41 - Go nuts!
+
+So we go on https://www.wigle.net/ , enter the Bssid and press Enter.
+Answer: UnileverWiFi
+
+5. The github account also says he is in london, so this is a other answer.
+6. Now we need to find the passwort, I search rly long for this. You need to search the source code of his blog. You for something strange, u will know it.
+
+After this u got the CTF.
+-------------------------------------------------------------------------------------------
